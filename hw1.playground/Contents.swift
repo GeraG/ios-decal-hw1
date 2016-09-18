@@ -21,12 +21,16 @@ class Words {
 //: ### Are the values passed in to the **init** function and those set to the instance
 //: ### variables the same type? If not, why?
 
-
-//: [EXPLAIN YOUR ANSWER HERE]
+//: They're slightly different. The values passed into the init function are of type 
+//: optional string, the instance variables are of type optional string implicity unwrapped.
+//: Variables of type optional string implicity unwrapped can be assigned to another
+//: variable of type String, of type Optional String, or of type Optional String implicity
+//: unwrapped. Although assigning it to another variable without an explicit type will not
+//: unwrap it and will assign Optional String type.
 
 
 //: ## Q2: Variable Types and Function Types
-    func arePalindromes(_ words: [String]) -> Bool {
+    class func arePalindromes(_ words: [String]) -> Bool {
         let reversedWords = words.map() {String($0.characters.reversed())}
         let numElements = words.count
         
@@ -35,18 +39,19 @@ class Words {
                 return false
             }
         }
+        return true
     }
 //: ### Why does the compiler dislike the **for loop**? Fix it.
 //: ### What else is wrong with this function? You may have to refer to (but **not**
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: There was nothing wrong with the for loop itself, but there was a missing return statement after the for loop and Bool is the expected value to be returned. The other issue was that the method was defined as an instance method, meaning it could only be called by instances of the class, not by the class itself. In our code it's being called by the class itself and needs to be defined as a class method for this to work.
 
 
 //: ## Q3: More Functions and Object Initialization
-    class func isAnagram() -> Bool {
-        var countLetters : [Character : Int] //Line X
+    func isAnagram() -> Bool {
+        var countLetters: [Character : Int] = [:] //Line X
         var lenA = self.wordA.characters.count
         var lenB = self.wordB.characters.count
         
@@ -81,7 +86,7 @@ class Words {
             }
         }
         
-        return nil
+        return true
     }
 //: ### What is the problem with declaring **countLetters** as we do in **Line X**,
 //: ### and then using it in **Line Y**? Fix it (by only changing **Line X**).
@@ -89,7 +94,13 @@ class Words {
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: countLetters was used in Line Y before being intialized in Line X so we there was
+//: no dictionary to look in. Initializing it to an empty dictionary fixed it.
+//: The other thing that's wrong is isAnagram() was being called by an instance object
+//: of the class, but isAnagram() is a class method. To fix, remove the class keyword
+//: to make it an instance method. The final thing wrong is that the function never
+//: returned a true boolean value. Instead, it returned nil which is not of type Bool.
+//: This was fixed by returning true instead of nil.
     
     
 }
